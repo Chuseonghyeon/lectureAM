@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="app.css">    
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+
+            <div class="msg-box">니나브</div>
+
+            <div class="indicator">
+
+                <div class="pin active"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+
+            </div>
+
+            <div class="slider">
+
+                <div class="box">
+                    <!-- 사용자정의 속성 -->
+                    <img src="images/01.png" alt="01.png" data-name="니나브"> 
+                </div>
+
+                <div class="box">
+                    <img src="images/02.png" alt="02.png" data-name="부끄브">
+                </div>
+
+                <div class="box">
+                    <img src="images/03.png" alt="03.png" data-name="니제좋">
+                </div>
+
+                <div class="box">
+                    <img src="images/04.png" alt="04.png" data-name="모코코">
+                </div>
+
+                <div class="box">
+                    <img src="images/05.png" alt="05.png" data-name="핑모코">
+                </div>
+
+                <div class="box">
+                    <img src="images/06.png" alt="06.png" data-name="개구리">
+                </div>
+
+            </div>
+            <div class="controller">
+                <button class="controlBtn" id="prev">&lt;</button>
+                <button class="controlBtn" id="next">&gt;</button>
+            </div>    
+        </div>
+    </div>
+    
+    <script>
+        
+        let isSlide = false;
+        let current = 0;
+        slide(); 
+
+        $("#prev").on("click",function(){
+
+            if(isSlide) return;
+
+            current--;
+
+            slide();
+
+        })
+        
+        $("#next").on("click",function(){
+
+            if(isSlide) return
+
+            current++;
+
+            slide();
+
+        })
+        
+        function slide(){
+
+            isSlide = true;
+
+            $(".pin").removeClass("active");
+
+            $(".slider").animate({"left": `-${current * 300}px`}, 500, function(){
+
+                isSlide = false;
+
+                $(".pin").eq(current).addClass("active")
+
+            });
+
+            let name = $(".box > img").eq(current).data("name");
+            console.log(name);
+
+            
+
+            if(current <= 0){
+
+                $("#prev").attr("disabled", true);
+
+            }else if(current >= 5){
+
+                $("#next").attr("disabled", true);
+
+            }else{
+
+                $("#prev").attr("disabled", false);
+                $("#next").attr("disabled", false);
+
+            }
+
+            $(".msg-box").css("top", "-50px");
+            $(".msg-box").text(name);
+            $(".msg-box").animate({"top":0},500)
+
+        }
+
+    </script>
+
+</body>
+</html>
